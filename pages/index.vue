@@ -1,35 +1,45 @@
 <template>
   <section class="container">
-    <div>
-      <app-logo/>
-      <h1 class="title">
-        question-poll
-      </h1>
-      <h2 class="subtitle">
-        Single page application that lets users vote through the Polls API.
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green">Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey">GitHub</a>
-      </div>
+    <title :page="title" />
+    <div class="questions-summary-list">
+      <question-summary-item
+        v-for="question in questionsSummary"
+        :key="question.id"
+        :url="question.url"
+        :choices="question.totalChoices"
+        :date="question.publishDate"
+        :question="question.questionName" />
     </div>
   </section>
 </template>
 
 <script>
-import AppLogo from '~/components/AppLogo.vue'
+import Title from '~/components/Title.vue';
+import QuestionSummaryItem from '~/components/QuestionSummaryItem.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
-    AppLogo
-  }
-}
+    Title,
+    QuestionSummaryItem,
+  },
+
+  data () {
+    return {
+      title: 'Questions',
+    };
+  },
+
+  async fetch ({ store, params }) {
+    await store.dispatch('getQuestions');
+  },
+
+  computed: {
+    ...mapGetters([
+      'questionsSummary',
+    ]),
+  },
+};
 </script>
 
 <style>
@@ -38,7 +48,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  padding: 20px;
 }
 
 .title {
@@ -50,15 +60,11 @@ export default {
   letter-spacing: 1px;
 }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
 .links {
   padding-top: 15px;
+}
+
+.questions-summary-list {
+  width: 100%;
 }
 </style>
