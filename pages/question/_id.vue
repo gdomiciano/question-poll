@@ -1,14 +1,12 @@
 <template>
   <section class="container">
-    <div>
-      <title />
-      <!-- <question> -->
-    </div>
+    <question-details :details="currentQuestion"/>
   </section>
 </template>
 
 <script>
-import Title from '~/components/Title.vue'
+import QuestionDetails from '~/components/QuestionDetails.vue'
+import { mapGetters } from 'vuex';
 
 export default {
   validate({ params }) {
@@ -23,17 +21,11 @@ export default {
     ...mapGetters([
       'currentQuestion',
     ])
-  }
+  },
+
 };
 </script>
 
-<style>
-.container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: left;
-}
+<style scoped>
 
 </style>

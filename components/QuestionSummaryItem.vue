@@ -1,6 +1,6 @@
 <template>
   <nuxt-link
-    :to="{ path: questionLink}"
+    :to="questionLink"
     tag="div"
     class="questions-summary-link question-summary-item">
     <h3 class="question-name">{{ questionName }}</h3>
@@ -43,7 +43,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .question-summary-item {
   border: 1px solid #35495e;
   border-radius: 5px;

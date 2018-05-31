@@ -60,14 +60,17 @@ const getters = {
   },
 
   currentQuestion: state => {
-    const choices = state.questionDetails.choices;
-    let totalVotes = 0;
-    choices.forEach(choice => totalVotes += choice.votes);
+    if (state.questionDetails){
+      const choices = state.questionDetails.choices;
+      let totalVotes = 0;
+      choices.forEach(choice => totalVotes += choice.votes);
 
-    return {
-      totalVotes,
-      choices,
-    };
+      return {
+        ...state.questionDetails,
+        totalVotes,
+      };
+    }
+    return null;
   },
 };
 
